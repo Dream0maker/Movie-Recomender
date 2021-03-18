@@ -62,7 +62,7 @@ e2 = Entry(wrapper2, width=32, fg='white', bg='#4b5162')
 e2.grid(row=4, column=2)
 e3 = Entry(wrapper2, width=32, fg='white', bg='#4b5162')
 e3.grid(row=6, column=2)
-movie_list = []
+# movie_list = []
 # dropdown menu 1
 movie_combo = ttk.Combobox(wrapper2, value=movie_list, width=32)
 rating_combo = ttk.Combobox(wrapper2, value=[1, 2, 3, 4, 5], width=32)
