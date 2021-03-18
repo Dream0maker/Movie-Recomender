@@ -41,7 +41,7 @@ def get_similar(movie_name, rating):
 root = Tk()
 root.title("Master 2 IAM")
 root.configure(bg='#4b5162')
-root.geometry('800x900')
+root.geometry('900x900')
 
 # create rappers to manage the gui
 wrapper1 = Frame(root, bg='#383c4a')
