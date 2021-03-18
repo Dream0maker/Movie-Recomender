@@ -2,37 +2,37 @@ from tkinter import ttk
 from tkinter import *
 import pandas as pd
 
-# ####################################################################################################################
-# #                                           backend                                                               ##
-# ####################################################################################################################
-# # movie lens data set import
-# ratings = pd.read_csv('DataSet/ratings.csv')
-# movies = pd.read_csv('DataSet/movies.csv')
-#
-# # merging the two files to get the movies and ratings in one file + dropping unwanted columns
-# ratings = pd.merge(movies, ratings).drop(['genres', 'timestamp'], axis=1)
-#
-# # changing the data structure to ease the work
-# user_ratings = ratings.pivot_table(index=['userId'], columns=['title'], values='rating')
-#
-# # remove movies who were rated by lesser than 10 user and fill Nan with 0
-# user_ratings = user_ratings.dropna(thresh=10, axis=1).fillna(0)
-#
-# # movie list shown in dropdown menu
-# movie_list = []
-# for i in range(0, len(user_ratings.columns)):
-#     movie_list.append(user_ratings.columns[i])
-#
-# # applying the pearson methode to get the similarities between the movies
-# item_similarity_df = user_ratings.corr(method='pearson')
-#
-#
-# def get_similar(movie_name, rating):
-#     # get the similarity score and subtracting 2.5 from the rating to fix placement of bad movies in the list
-#     similar_score = item_similarity_df[movie_name] * (rating - 2.5)
-#     similar_score = similar_score.sort_values(ascending=False)
-#     return similar_score
-#
+####################################################################################################################
+#                                           backend                                                               ##
+####################################################################################################################
+# movie lens data set import
+ratings = pd.read_csv('DataSet/ratings.csv')
+movies = pd.read_csv('DataSet/movies.csv')
+
+# merging the two files to get the movies and ratings in one file + dropping unwanted columns
+ratings = pd.merge(movies, ratings).drop(['genres', 'timestamp'], axis=1)
+
+# changing the data structure to ease the work
+user_ratings = ratings.pivot_table(index=['userId'], columns=['title'], values='rating')
+
+# remove movies who were rated by lesser than 10 user and fill Nan with 0
+user_ratings = user_ratings.dropna(thresh=10, axis=1).fillna(0)
+
+# movie list shown in dropdown menu
+movie_list = []
+for i in range(0, len(user_ratings.columns)):
+    movie_list.append(user_ratings.columns[i])
+
+# applying the pearson methode to get the similarities between the movies
+item_similarity_df = user_ratings.corr(method='pearson')
+
+
+def get_similar(movie_name, rating):
+    # get the similarity score and subtracting 2.5 from the rating to fix placement of bad movies in the list
+    similar_score = item_similarity_df[movie_name] * (rating - 2.5)
+    similar_score = similar_score.sort_values(ascending=False)
+    return similar_score
+
 
 ################################################################################################################
 #                                                  GUI CODE                                                    #
