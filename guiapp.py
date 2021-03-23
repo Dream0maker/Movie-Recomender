@@ -41,7 +41,8 @@ def get_similar(movie_name, rating):
 root = Tk()
 root.title("Master 2 IAM")
 root.configure(bg='#4b5162')
-root.geometry('900x900')
+root.geometry('800x700')
+root.resizable(False, False)
 
 # create rappers to manage the gui
 wrapper1 = Frame(root, bg='#383c4a')
@@ -55,42 +56,35 @@ wrapper3.pack(padx=30, pady=40, fill="both", expand="yes")
 
 Label(wrapper1, text="MOVIE RECOMMENDER", bg='#383c4a', fg='white', font=("Chango", 33)).pack(pady=10)
 # drop down box with their label
-Label(wrapper2, text="Select 3 movies you watched and rate them", fg='white', bg='#4b5162').grid(row=0, column=2, padx=10, pady=10)
-e1 = Entry(wrapper2, width=32, fg='white', bg='#4b5162')
-e1.grid(row=2, column=2)
-e2 = Entry(wrapper2, width=32, fg='white', bg='#4b5162')
-e2.grid(row=4, column=2)
-e3 = Entry(wrapper2, width=32, fg='white', bg='#4b5162')
-e3.grid(row=6, column=2)
-# movie_list = []
+Label(wrapper2, text="Select 3 movies you watched and rate them", fg='white', bg='#4b5162', font=("Chango", 10)).grid(row=0, column=0, padx=10, pady=10)
 # dropdown menu 1
-movie_combo = ttk.Combobox(wrapper2, value=movie_list, width=32)
-rating_combo = ttk.Combobox(wrapper2, value=[1, 2, 3, 4, 5], width=32)
+movie_combo = ttk.Combobox(wrapper2, value=movie_list, width=60)
+rating_combo = ttk.Combobox(wrapper2, value=[0, 1, 2, 3, 4, 5], width=32)
 # dropdown menu 2
-movie_combo2 = ttk.Combobox(wrapper2, value=movie_list, width=32)
-rating_combo2 = ttk.Combobox(wrapper2, value=[1, 2, 3, 4, 5], width=32)
+movie_combo2 = ttk.Combobox(wrapper2, value=movie_list, width=60)
+rating_combo2 = ttk.Combobox(wrapper2, value=[0, 1, 2, 3, 4, 5], width=32)
 # dropdown menu 1
-movie_combo3 = ttk.Combobox(wrapper2, value=movie_list, width=32)
-rating_combo3 = ttk.Combobox(wrapper2, value=[1, 2, 3, 4, 5], width=32)
+movie_combo3 = ttk.Combobox(wrapper2, value=movie_list, width=60)
+rating_combo3 = ttk.Combobox(wrapper2, value=[0, 1, 2, 3, 4, 5], width=32)
 
 # button function to add selected movies
 fake_user = []
 
 
 def add_movie(event):
-    e1.insert(END, movie_combo.get())
+    # e1.insert(END, movie_combo.get())
     mov = [movie_combo.get(), int(rating_combo.get())]
     fake_user.append(mov)
 
 
 def add_movie2(event):
-    e2.insert(END, movie_combo2.get())
+    # e2.insert(END, movie_combo2.get())
     mov = [movie_combo2.get(), int(rating_combo2.get())]
     fake_user.append(mov)
 
 
 def add_movie3(event):
-    e3.insert(END, movie_combo3.get())
+    # e3.insert(END, movie_combo3.get())
     mov = [movie_combo3.get(), int(rating_combo3.get())]
     fake_user.append(mov)
 
@@ -98,32 +92,34 @@ def add_movie3(event):
 # comboSelect bind 1
 rating_combo.bind("<<ComboboxSelected>>", add_movie)
 rating_combo.grid(row=1, column=3, padx=10, pady=10)
-movie_combo.grid(row=1, column=0, padx=10, pady=10)
+movie_combo.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
 # comboSelect bind 2
 rating_combo2.bind("<<ComboboxSelected>>", add_movie2)
 rating_combo2.grid(row=3, column=3, padx=10, pady=10)
-movie_combo2.grid(row=3, column=0, padx=10, pady=10)
+movie_combo2.grid(row=3, column=0,  columnspan=3, padx=10, pady=10)
 # comboSelect bind 3
 rating_combo3.bind("<<ComboboxSelected>>", add_movie3)
 rating_combo3.grid(row=5, column=3, padx=10, pady=10)
-movie_combo3.grid(row=5, column=0, padx=10, pady=10)
-
+movie_combo3.grid(row=5, column=0,  columnspan=3, padx=10, pady=10)
+# list result in a list box
+Label(wrapper3, text="Our Recommendation", bg='#4b5162', fg='white', font=("Chango", 10)).pack(pady=20)
 # show the movie recommended with their ratings
-result = Listbox(wrapper3, width=40)
-result.grid(padx=240, row=3, column=2)
+result = Listbox(wrapper3, width=200)
+result.pack()
 
-# create error message when movies not selected
-error_message = Label(wrapper2, fg="red", bg='#4b5162')
-error_message.grid(row=8, column=0, )
+
+# # create error message when movies not selected
+error_message = StringVar()
 
 
 # button to suggest movie
 def calculate():
     # collecting similar movies so we can show the result
-    if not any((e1.get(), e2.get(), e3.get())):
-        error_message['text'] = "please enter at least one movie !"
+    if not any((movie_combo.get(), movie_combo2.get(), movie_combo3.get())):
+        error_message = ['please enter at least one movie !']
+        result.insert(END, error_message)
     else:
-        error_message.config(text="                         ")
+        # error_message.config(text="                         ")
         similar_movies = pd.DataFrame()
         for movie, rating in fake_user:
             similar_movies = similar_movies.append(get_similar(movie, rating), ignore_index=True)
@@ -139,24 +135,19 @@ def calculate():
 # clear button function
 def clear():
     fake_user.clear()
+    movie_combo.delete(0, END)
+    rating_combo.delete(0, END)
     movie_combo2.delete(0, END)
     rating_combo2.delete(0, END)
     movie_combo3.delete(0, END)
     rating_combo3.delete(0, END)
-    e1.delete(0, END)
-    e2.delete(0, END)
-    e3.delete(0, END)
     result.delete(0, END)
-    error_message.config(text="                           ")
 
 
 # create buttons
-B1 = Button(wrapper2, text="Add Your Movie", bg='#7c818c', fg='white', padx=10, pady=10, borderwidth=2, command=calculate).grid(row=8, column=0)
+B1 = Button(wrapper2, text="Get Recommendation", bg='#7c818c', fg='white', padx=10, pady=10, borderwidth=2, command=calculate).grid(row=8, column=0, padx=20, pady=10)
 B2 = Button(wrapper2, text="     clear    ", bg='#7c818c', fg='white', padx=24, pady=10, borderwidth=2, command=clear).grid(row=8, column=3)
 
-# list result in a list box
-Label(wrapper3, text="Our Recommendation", bg='#4b5162', fg='white').grid(row=0, column=2)
-# Label(wrapper3, text="                                                 ").grid(row=2, column=0)
 
 root.resizable(width=False, height=True)
 root.mainloop()
