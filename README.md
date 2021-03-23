@@ -11,6 +11,7 @@ simple movie recomeder based on collaborative filtering using movie lens as a da
 
 ![alt text](https://github.com/Dream0maker/Movie-Recomender/blob/main/Pictures/Screenshot%20from%202021-03-23%2010.33.54.png?raw=true)
 
+PS: This Program is not finished
 
 # Files in use
   * guiapp.py --- the front end of the project (incomplete)
