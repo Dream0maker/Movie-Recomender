@@ -104,10 +104,22 @@ movie_combo3.grid(row=5, column=0,  columnspan=3, padx=10, pady=10)
 # list result in a list box
 Label(wrapper3, text="Our Recommendation", bg='#4b5162', fg='white', font=("Chango", 10)).pack(pady=20)
 # show the movie recommended with their ratings
-result = Listbox(wrapper3, width=200)
-result.pack()
-
-
+# result = Listbox(wrapper3, width=200)
+# result.pack()
+# Treeview instead of listbox
+tree = ttk.Treeview(wrapper3)
+# define columns
+tree['columns'] = ("ID", "Movie Name")
+# format Treeview
+tree.column("#0", width=0, stretch=NO)
+tree.column("ID", anchor=W, width=20)
+tree.column("Movie Name", width=650, anchor=W)
+# headings
+tree.heading("#0", text="", anchor=W)
+tree.heading("ID", text="#", anchor=W)
+tree.heading("Movie Name", text="Movie Name", anchor=W)
+# pack
+tree.pack()
 # # create error message when movies not selected
 error_message = StringVar()
 
@@ -117,7 +129,7 @@ def calculate():
     # collecting similar movies so we can show the result
     if not any((movie_combo.get(), movie_combo2.get(), movie_combo3.get())):
         error_message = ['please enter at least one movie !']
-        result.insert(END, error_message)
+        tree.insert(parent='', index='end', iid=0, text='', values=(1, error_message))
     else:
         # error_message.config(text="                         ")
         similar_movies = pd.DataFrame()
@@ -128,7 +140,8 @@ def calculate():
         i = 0
         j = 1
         for i in range(20):
-            result.insert(END, s.iloc[i:j].to_string())
+            tree.insert(parent='', index='end', iid=i, text='', values=(j, s.iloc[i:j].to_string()))
+            # tree.insert(END, s.iloc[i:j].to_string())
             j = j + 1
 
 
@@ -141,7 +154,8 @@ def clear():
     rating_combo2.delete(0, END)
     movie_combo3.delete(0, END)
     rating_combo3.delete(0, END)
-    result.delete(0, END)
+    for record in tree.get_children():
+        tree.delete(record)
 
 
 # create buttons
