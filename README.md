@@ -2,8 +2,15 @@
 simple movie recomeder based on collaborative filtering using movie lens as a database 
 
 # ScreenShots of the programme
-main interface :
+* main interface :
+
 ![alt text](https://github.com/Dream0maker/Movie-Recomender/blob/main/Pictures/Screenshot%20from%202021-03-23%2010.33.13.png?raw=true)
+
+* end results :
+
+
+![alt text](https://github.com/Dream0maker/Movie-Recomender/blob/main/Pictures/Screenshot%20from%202021-03-23%2010.33.54.png?raw=true)
+
 
 # Files in use
   * guiapp.py --- the front end of the project (incomplete)
