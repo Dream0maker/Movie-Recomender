@@ -108,9 +108,9 @@ fake_user = []
 def add_movie(event):
     mov = [movie_combo.get(), int(rating_combo.get())]
     fake_user.append(mov)
-    global ch
-    ch = Label(wrapper2, text=fake_user)
-    ch.grid(row=4, column=0,columnspan=4 , padx=10, pady=10)
+    global labeltest
+    labeltest = Label(wrapper2, text=fake_user)
+    labeltest.grid(row=4, column=0,columnspan=4 , padx=10, pady=10)
 
 
 def fill(event):
@@ -172,11 +172,11 @@ def clear():
     movie_combo.delete(0, END)
     rating_combo.delete(0, END)
     lb.delete(0, END)
-    ch.destroy()
     for item in movie_list:
         lb.insert(END, item)
     for record in tree.get_children():
         tree.delete(record)
+    labeltest.destroy()
 
 
 # create buttons
